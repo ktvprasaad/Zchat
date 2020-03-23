@@ -8,6 +8,7 @@ import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import NetInfo from '@react-native-community/netinfo';
 
+
 const firebase = require('firebase');
 require('firebase/firestore');
 
@@ -39,6 +40,7 @@ export default class Chat extends React.Component {
           isConnected: false
         };  
 
+        this.referenceMessageUser = null;
         this.referenceMessages = firebase.firestore().collection('messages');
     }
 
@@ -64,7 +66,7 @@ export default class Chat extends React.Component {
 
     componentDidMount() {
       NetInfo.isConnected.fetch().then(isConnected => {
-        if (isConnected) {
+        if (isConnected == true) {
           console.log('online');
 
           this.authUnsubscribe = firebase.auth().onAuthStateChanged(async(user) => {
@@ -82,8 +84,11 @@ export default class Chat extends React.Component {
               uid: user.uid,
               isConnected: true
             });
-        
-            this.unsubscribe = this.referenceMessages.orderBy('createdAt','desc').onSnapshot(this.onCollectionUpdate);
+
+            // create a reference to the active user's documents (messages)
+            this.referenceMessageUser = firebase.firestore().collection("messages");
+            // listen for collection changes for current user
+            this.unsubscribe = this.referenceMessageUser.orderBy('createdAt','desc').onSnapshot(this.onCollectionUpdate);
 
           });
         } else {
@@ -138,7 +143,7 @@ export default class Chat extends React.Component {
     saveMessages = async() => {
       try {
         await AsyncStorage.setItem('messages',JSON.stringify(this.state.messages));
-      } catch (erro) {
+      } catch (error) {
         console.log(error.message);
       }
     }
