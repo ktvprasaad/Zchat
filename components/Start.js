@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, Text, TextInput, View, TouchableOpacity, Button  } from 'react-native';
+import {decode, encode} from 'base-64';
 
 // Starting screen invoked thru App.js
 export default class Start extends React.Component {
     constructor(props) {
       super(props);
+
+      //Imported base-64 and following code to overcome the bug with the warning message
+      //"Possible Unhandled Promise Rejection (id: 1): ReferenceError: Can't find variable: atob"
+      if (!global.btoa) {
+        global.btoa = encode;
+      }
+    
+      if (!global.atob) {
+        global.atob = decode;
+      }
+
       this.state = { 
         name: '', 
         color: '',
