@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Platform, AsyncStorage } from 'react-native';
+import { View, Text, Platform, AsyncStorage, Image } from 'react-native';
 // GiftedChat - react native's library with inbuilt features such as text input field,
 // speech bubbles, send button
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
@@ -7,7 +7,8 @@ import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 // appropriately
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import NetInfo from '@react-native-community/netinfo';
-
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -37,6 +38,8 @@ export default class Chat extends React.Component {
             name: '',
             avatar: ''
           },
+          image: null,
+          location: null,
           isConnected: false
         };  
 
@@ -111,7 +114,9 @@ export default class Chat extends React.Component {
           _id: data._id,
           text: data.text,
           createdAt: data.createdAt.toDate(),
-          user: data.user
+          user: data.user,
+          image: data.image || null,
+          location: data.location || null
         });
       });
       this.setState({
@@ -136,7 +141,9 @@ export default class Chat extends React.Component {
         _id: message._id,
         text: message.text || '',
         createdAt: message.createdAt,
-        user: message.user
+        user: message.user,
+        image: message.image || '',
+        location: message.location || null
       });
     }
 
@@ -190,6 +197,10 @@ export default class Chat extends React.Component {
       )
     }
 
+    renderCustomActions = (props) => {
+      return <CustomActions {...props} />;
+    }
+
     renderInputToolbar(props) {
       if(this.state.isConnected == false ) {
       } else {
@@ -201,6 +212,27 @@ export default class Chat extends React.Component {
       }
     }
 
+    renderCustomView (props) {
+      const { currentMessage } = props;
+      if (currentMessage.location) {
+          return (
+              <MapView
+                  style={{width: 150,
+                  height: 100,
+                  borderRadius: 13,
+                  margin: 3}}
+                  region={{
+                      latitude: currentMessage.location.latitude,
+                      longitude: currentMessage.location.longitude,
+                      latitudeDelta: 0.0922,
+                      longitudeDelta: 0.0421,
+                  }}
+              />
+          );
+      }
+      return null;
+    }
+
     render() {
         return (
           <View
@@ -210,11 +242,16 @@ export default class Chat extends React.Component {
             }}
           >
             <Text>{this.state.loggedInText}</Text>
+            {this.state.image && 
+              <Image source={{uri: this.state.image.uri}} style={{width: 200, height: 200}}/>}
             <GiftedChat
               renderBubble={this.renderBubble.bind(this)}
+              renderInputToolbar={this.renderInputToolbar.bind(this)}
+              renderCustomView={this.renderCustomView.bind(this)}
               messages={this.state.messages}
               onSend={messages => this.onSend(messages)}
               user={this.state.user}
+              renderActions={this.renderCustomActions}
             />
             {Platform.OS === 'android' ? <KeyboardSpacer /> : null}
           </View>
