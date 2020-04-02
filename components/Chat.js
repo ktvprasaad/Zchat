@@ -58,7 +58,7 @@ export default class Chat extends React.Component {
       //await operator to work with promises easier, it waits until asyncStorage promise settles
       let messages = '';
       try {
-        messaages = await AsyncStorage.getItem('messages') || [];
+        messages = await AsyncStorage.getItem('messages') || [];
         this.setState({
           messages: JSON.parse(messages)
         });
