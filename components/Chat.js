@@ -109,7 +109,7 @@ export default class Chat extends React.Component {
       // go through each document
       querySnapshot.forEach((doc) => {
         // get the QueryDocumentSnapshot's data
-        var data = doc.data();
+        let data = doc.data();
         messages.push({
           _id: data._id,
           text: data.text,
@@ -124,12 +124,13 @@ export default class Chat extends React.Component {
       });
     };
 
-    setUser = (_id, name='Anonymous') => {
+    setUser = (_id, name='Zchat') => {
       this.setState({
         user: {
           _id: _id,
           name: name,
-          avatar: 'https://placeimg.com/140/140/tech'
+          // avatar: 'https://placeimg.com/140/140/tech',
+          avatar: `https://ui-avatars.com/api/?background=fc466b&color=ffffff&rounded=true&name=${name}`,
         },
         uid: _id
       })
