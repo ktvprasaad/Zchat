@@ -1,4 +1,32 @@
-import React from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Chat.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Chat.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
 import { View, Text, Platform, AsyncStorage, Image } from 'react-native';
 /** 
  * @description 
@@ -58,10 +86,10 @@ export default class Chat extends React.Component {
 
   /**  
    * @description
-   * Receive name & color as parameter from 'Start' screen.
+   * Receive name &amp; color as parameter from 'Start' screen.
    * @function navigationOptions - static function
    * @param {string} navigation
-   * @returns {string} - user name & background color.
+   * @returns {string} - user name &amp; background color.
    */ 
     static navigationOptions = ({ navigation }) => {
       return {
@@ -167,7 +195,7 @@ export default class Chat extends React.Component {
           _id: _id,
           name: name,
           // avatar: 'https://placeimg.com/140/140/tech',
-          avatar: `https://ui-avatars.com/api/?background=fc466b&color=ffffff&rounded=true&name=${name}`,
+          avatar: `https://ui-avatars.com/api/?background=fc466b&amp;color=ffffff&amp;rounded=true&amp;name=${name}`,
         },
         uid: _id
       })
@@ -226,7 +254,7 @@ export default class Chat extends React.Component {
     }
 
   /** 
-   * @description Stop listening to authentication & Stop listening for changes
+   * @description Stop listening to authentication &amp; Stop listening for changes
    */
     componentWillUnmount() {
       // this.unsubscribe();
@@ -241,7 +269,7 @@ export default class Chat extends React.Component {
    */
     renderBubble(props) {
       return (
-        <Bubble
+        &lt;Bubble
           {...props}
           wrapperStyle={{
             right: {
@@ -262,7 +290,7 @@ export default class Chat extends React.Component {
    * @returns ...props
    */ 
     renderCustomActions = (props) => {
-      return <CustomActions {...props} />;
+      return &lt;CustomActions {...props} />;
     }
 
   /**
@@ -274,7 +302,7 @@ export default class Chat extends React.Component {
       if(this.state.isConnected == false ) {
       } else {
         return(
-          <InputToolbar
+          &lt;InputToolbar
           {...props}
           />
         )
@@ -290,7 +318,7 @@ export default class Chat extends React.Component {
       const { currentMessage } = props;
       if (currentMessage.location) {
           return (
-              <MapView
+              &lt;MapView
                   style={{width: 150,
                   height: 100,
                   borderRadius: 13,
@@ -309,16 +337,16 @@ export default class Chat extends React.Component {
 
     render() {
         return (
-          <View
+          &lt;View
             style={{
               flex: 1,
               backgroundColor: this.props.navigation.state.params.color
             }}
           >
-            <Text>{this.state.loggedInText}</Text>
-            {this.state.image && 
-              <Image source={{uri: this.state.image.uri}} style={{width: 200, height: 200}}/>}
-            <GiftedChat
+            &lt;Text>{this.state.loggedInText}&lt;/Text>
+            {this.state.image &amp;&amp; 
+              &lt;Image source={{uri: this.state.image.uri}} style={{width: 200, height: 200}}/>}
+            &lt;GiftedChat
               renderBubble={this.renderBubble.bind(this)}
               renderInputToolbar={this.renderInputToolbar.bind(this)}
               renderCustomView={this.renderCustomView.bind(this)}
@@ -327,10 +355,33 @@ export default class Chat extends React.Component {
               user={this.state.user}
               renderActions={this.renderCustomActions}
             />
-            {Platform.OS === 'android' ? <KeyboardSpacer /> : null}
-          </View>
+            {Platform.OS === 'android' ? &lt;KeyboardSpacer /> : null}
+          &lt;/View>
         );
     }
 }
 
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addMessage">addMessage</a></li><li><a href="global.html#componentDidMount">componentDidMount</a></li><li><a href="global.html#componentWillUnmount">componentWillUnmount</a></li><li><a href="global.html#deleteMessages">deleteMessages</a></li><li><a href="global.html#getLocation">getLocation</a></li><li><a href="global.html#getMessages">getMessages</a></li><li><a href="global.html#navigationOptions-staticfunction">navigationOptions - static function</a></li><li><a href="global.html#onActionPress">onActionPress</a></li><li><a href="global.html#onSend">onSend</a></li><li><a href="global.html#pickImage">pickImage</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderBubble">renderBubble</a></li><li><a href="global.html#renderCustomActions">renderCustomActions</a></li><li><a href="global.html#renderCustomView">renderCustomView</a></li><li><a href="global.html#renderInputToolbar">renderInputToolbar</a></li><li><a href="global.html#saveMessages">saveMessages</a></li><li><a href="global.html#styles">styles</a></li><li><a href="global.html#takePhoto">takePhoto</a></li><li><a href="global.html#uploadImage">uploadImage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Sat Apr 11 2020 11:11:15 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
